@@ -1,0 +1,69 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.card-container {
+  display: grid;
+  gap: 24px;
+  padding: 16px;
+  width: 100%;
+  max-width: 1200px;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 600px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  border-radius: 16px;
+  padding: 24px;
+  background-color: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card .icon {
+  font-size: 48px;
+  color: #007BFF;
+  margin-bottom: 16px;
+}
+
+.card .name {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.card .occupation {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 4px 0 16px;
+  color: #666;
+}
+
+.card .quote {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
