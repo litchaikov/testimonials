@@ -7,15 +7,44 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <title>Testimonials</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
-    // Script to send height to parent iframe
-    window.onload = function () {
-      const height = document.documentElement.scrollHeight;
-      parent.postMessage(height, '*');
-    };
+    async function downloadIcons() {
+      const zip = new JSZip();
+      const icons = document.querySelectorAll('.icon');
+
+      // Iterate over all icons and add them to the ZIP archive
+      for (let i = 0; i < icons.length; i++) {
+        const iconName = icons[i].className.match(/fa-(\w+)/)[1];
+        const svgURL = `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/svgs/solid/${iconName}.svg`;
+        
+        try {
+          const response = await fetch(svgURL);
+          if (response.ok) {
+            const svgContent = await response.text();
+            zip.file(`${iconName}.svg`, svgContent);
+          }
+        } catch (err) {
+          console.error(`Failed to fetch icon: ${iconName}`);
+        }
+      }
+
+      // Generate ZIP and trigger download
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(content);
+        link.download = "icons.zip";
+        link.click();
+      });
+    }
   </script>
 </head>
 <body>
+  <!-- Button to download icons -->
+  <button onclick="downloadIcons()" style="margin: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+    Download All Icons
+  </button>
+
   <div class="card-container">
     <div class="card">
       <i class="fas fa-user icon"></i>
@@ -65,81 +94,6 @@
       <p class="occupation">Software Developer</p>
       <p class="quote">"Dlog transformed how I approach well-being and productivity. It’s truly life-changing."</p>
     </div>
-    <div class="card">
-      <i class="fas fa-camera icon"></i>
-      <p class="name">Emma</p>
-      <p class="occupation">Photographer</p>
-      <p class="quote">"It’s like having my own private Instagram but filled with meaningful reflections."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-paint-brush icon"></i>
-      <p class="name">Liam</p>
-      <p class="occupation">Graphic Designer</p>
-      <p class="quote">"The iPad app is spectacular. Hands down the best app I’ve used on my tablet."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-flask icon"></i>
-      <p class="name">Olivia</p>
-      <p class="occupation">Researcher</p>
-      <p class="quote">"Dlog Discuss provides insights and summaries that no human could match."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-users icon"></i>
-      <p class="name">Lucas</p>
-      <p class="occupation">Family Therapist</p>
-      <p class="quote">"Seeing my relationships improve over time through journaling has been incredible."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-drafting-compass icon"></i>
-      <p class="name">Ethan</p>
-      <p class="occupation">Architect</p>
-      <p class="quote">"Dlog is gorgeous, intuitive, and so powerful. It makes productivity feel effortless."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-pen-nib icon"></i>
-      <p class="name">Zoe</p>
-      <p class="occupation">Author</p>
-      <p class="quote">"This app is the perfect companion for anyone who values self-growth."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-book icon"></i>
-      <p class="name">Mark</p>
-      <p class="occupation">Writer</p>
-      <p class="quote">"Reflecting on my past journals has given me a deeper understanding of myself."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-tasks icon"></i>
-      <p class="name">Jake</p>
-      <p class="occupation">Product Manager</p>
-      <p class="quote">"The projects and subprojects feature keeps me organized in the most enjoyable way."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-leaf icon"></i>
-      <p class="name">Chloe</p>
-      <p class="occupation">Wellness Coach</p>
-      <p class="quote">"It’s more than an app. It’s a tool for mastering my environment."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-chart-line icon"></i>
-      <p class="name">Ryan</p>
-      <p class="occupation">Business Analyst</p>
-      <p class="quote">"Dlog makes combining well-being and productivity feel natural and seamless."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-calendar icon"></i>
-      <p class="name">Grace</p>
-      <p class="occupation">Mom of Three</p>
-      <p class="quote">"I love how Dlog integrates beautifully with Apple Calendar and Reminders."</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-chalkboard-teacher icon"></i>
-      <p class="name">Isabella</p>
-      <p class="occupation">Teacher</p>
-      <p class="quote">"Everything about this app is elegant, functional, and inspiring."</p>
-    </div>
   </div>
-
-
 </body>
 </html>
-
